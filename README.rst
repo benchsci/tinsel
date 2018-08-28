@@ -4,17 +4,12 @@ tinsel
 *Your data IS your schema*
 
 .. image:: https://img.shields.io/pypi/pyversions/tinsel.svg
-    :alt: PyPI - Python Version
-
 .. image:: https://img.shields.io/pypi/v/tinsel.svg
     :target: https://pypi.python.org/pypi/tinsel
-
 .. image:: https://img.shields.io/travis/Orhideous/tinsel.svg
     :target: https://travis-ci.org/Orhideous/tinsel
-
 .. image:: https://pyup.io/repos/github/Orhideous/tinsel/shield.svg
     :target: https://pyup.io/repos/github/Orhideous/tinsel/
-    :alt: Updates
 
 This tiny library helps to overcome excessive complexity in hand-written pyspark
 dataframe schemas.
@@ -68,7 +63,7 @@ Create some data, if necessary::
         )
     ]
 
-And… voilà!
+And… voilà!::
 
     from pyspark.sql import SparkSession
 
