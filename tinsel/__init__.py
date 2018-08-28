@@ -1,6 +1,2 @@
-from tinsel.lib import transform, struct
-from tinsel.types import long, short, byte
-
-__author__ = """Andriy Kushnir (Orhideous)"""
-__email__ = 'me@orhideous.name'
-__version__ = '0.1.0'
+from tinsel.lib import transform, struct  # noqa: F401
+from tinsel.types import long, short, byte  # noqa: F401
