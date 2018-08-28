@@ -20,13 +20,15 @@ dataframe schemas.
 How?
 ----
 
-Shape your data as ``NamedTuple``::
+Shape your data as ``NamedTuple`` or dataclasses - they can freely mix::
 
+    from dataclasses import dataclass
     from tinsel import struct, transform
     from typing import NamedTuple, Optional, Dict, List
 
     @struct
-    class UserInfo(NamedTuple):
+    @dataclass
+    class UserInfo:
         hobby: List[str]
         last_seen: Optional[int]
         pet_ages: Dict[str, int]

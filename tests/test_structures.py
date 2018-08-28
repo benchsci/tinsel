@@ -1,6 +1,13 @@
+import sys
+import pytest
 from tinsel.lib import struct, transform
 from pyspark.sql import types as t
 from typing import NamedTuple, Optional, Dict, List
+
+skip_dc = pytest.mark.skipif(
+    sys.version_info < (3, 7),
+    reason="Requires python3.7 or higher to test dataclasses"
+)
 
 
 @struct
@@ -89,3 +96,46 @@ def test_preserve_fields_order():
 
 def test_parse_complex_type():
     assert transform(Complex) == COMPLEX_STRUCT
+
+
+@skip_dc
+def test_preserve_fields_order_dc():
+    from dataclasses import dataclass
+
+    @struct
+    @dataclass
+    class PlainDC:
+        a: str
+        b: int
+        c: bool
+
+    assert tuple(transform(PlainDC).names) == tuple(PlainDC.__dataclass_fields__.keys())
+
+
+@skip_dc
+def test_parse_complex_type_dc():
+    from dataclasses import dataclass
+
+    @struct
+    @dataclass
+    class PlainDC:
+        a: str
+        b: int
+        c: bool
+
+    @struct
+    @dataclass
+    class BoxDC:
+        d: float
+        e: PlainDC
+        f: None
+
+    @struct
+    @dataclass
+    class ComplexDC:
+        g: Optional[PlainDC]
+        h: List[Dict[str, Optional[BoxDC]]]
+        i: Dict[Box, Optional[List[Dict[int, PlainDC]]]]
+
+    assert transform(ComplexDC) == COMPLEX_STRUCT
+    assert transform(Complex) == transform(ComplexDC)

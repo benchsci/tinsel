@@ -1,7 +1,5 @@
-from collections import OrderedDict
 from datetime import date, datetime
 from decimal import Decimal
-# noinspection PyProtectedMember
 from typing import Optional, Union, List, Tuple, Dict
 
 from pyspark.sql import types as t
@@ -13,10 +11,14 @@ def is_pyspark_class(cls: type) -> bool:
     return getattr(cls, "__pyspark_struct__", None) is ...
 
 
-def is_typed_namedtuple(cls: type) -> bool:
+def is_container(cls: type) -> bool:
     fields = getattr(cls, "_fields", None)
+    dc_fields = getattr(cls, "__dataclass_fields__", None)
     annotations = getattr(cls, "__annotations__", None)
-    return isinstance(fields, tuple) and isinstance(annotations, OrderedDict)
+    return (
+        (isinstance(fields, tuple) or isinstance(dc_fields, dict))
+        and isinstance(annotations, dict)
+    )
 
 
 def struct(cls: type) -> type:
@@ -25,7 +27,7 @@ def struct(cls: type) -> type:
 
     :param cls: Typed NamedTuple
     """
-    if not is_typed_namedtuple(cls):
+    if not is_container(cls):
         raise ValueError(f"Only NamedTuple instances can be decorated with @struct, not {cls.__name__}")
     # Overwrite type with augmented one
     return type(cls.__name__, cls.__bases__, dict(__pyspark_struct__=..., **cls.__dict__))
@@ -34,7 +36,7 @@ def struct(cls: type) -> type:
 def check_pyspark_struct(cls: type):
     if not isinstance(cls, type):
         raise TypeError(f"Expected type, but got instance {cls} of type {type(cls).__name__}")
-    if is_typed_namedtuple(cls):
+    if is_container(cls):
         if not is_pyspark_class(cls):
             raise ValueError(f"Looks like type {cls.__name__} missed @struct decorator")
     else:
@@ -76,7 +78,7 @@ def infer_complex_spark_type(typeclass):
 
 
 def infer_spark_type(typeclass) -> t.DataType:
-    if typeclass is NoneType:
+    if typeclass in (None, NoneType):
         return t.NullType()
     elif typeclass is str:
         return t.StringType()

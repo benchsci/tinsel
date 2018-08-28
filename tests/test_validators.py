@@ -5,7 +5,7 @@ from typing import NamedTuple
 from tinsel.lib import (
     struct,
     is_pyspark_class,
-    is_typed_namedtuple,
+    is_container,
     check_pyspark_struct,
 )
 
@@ -30,9 +30,9 @@ def test_struct_applicability():
 
 
 def test_namedtuple_heuristics():
-    assert is_typed_namedtuple(Box)
-    assert not is_typed_namedtuple(OldBox)
-    assert not is_typed_namedtuple(tuple)
+    assert is_container(Box)
+    assert not is_container(OldBox)
+    assert not is_container(tuple)
 
 
 def test_pyspark_struct():
