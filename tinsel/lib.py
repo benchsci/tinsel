@@ -1,4 +1,3 @@
-import sys
 from collections import OrderedDict
 from datetime import date, datetime
 from decimal import Decimal
@@ -43,14 +42,11 @@ def check_pyspark_struct(cls: type):
 
 
 def infer_nullability(typeclass) -> bool:
-    ver = sys.version_info[:2]
-    if ver == (3, 6):
-        from typing import _Union as UnionType
-        is_union = isinstance(typeclass, UnionType)
-    elif ver == (3, 7):
-        is_union = getattr(typeclass, "__origin__", None) is Union
-    else:
-        raise RuntimeError("This python version is not supported")
+    import typing
+    is_union = (
+        isinstance(typeclass, getattr(typing, "_Union", type(T)))
+        or getattr(typeclass, "__origin__", None) is Union
+    )
     return is_union and NoneType in set(typeclass.__args__)
 
 
