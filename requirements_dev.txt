@@ -2,6 +2,7 @@ wheel==0.31.1
 flake8==3.5.0
 tox==3.2.1
 coverage==4.5.1
-
+coveralls==1.4.0
 pytest==3.7.3
+pytest-cov==2.5.1
 pytest-runner==4.2

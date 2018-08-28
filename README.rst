@@ -7,6 +7,8 @@ tinsel
     :target: https://pypi.python.org/pypi/tinsel
 .. image:: https://img.shields.io/pypi/v/tinsel.svg
     :target: https://pypi.python.org/pypi/tinsel
+.. image:: https://coveralls.io/repos/github/Orhideous/tinsel/badge.svg?branch=master
+    :target: https://coveralls.io/github/Orhideous/tinsel?branch=master
 .. image:: https://img.shields.io/travis/Orhideous/tinsel.svg
     :target: https://travis-ci.org/Orhideous/tinsel
 .. image:: https://pyup.io/repos/github/Orhideous/tinsel/shield.svg
