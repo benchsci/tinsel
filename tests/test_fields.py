@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from decimal import Decimal
-from typing import List, Dict, Optional, Union, Callable, GenericMeta, NamedTuple
+from typing import List, Dict, Optional, Union, Callable, NamedTuple
 
 import pytest
 from pyspark.sql import types as t
@@ -129,6 +129,6 @@ def test_optionals_unlifting(raw, expected):
 
 
 @pytest.mark.parametrize(["raw", "field_factory"], NULLABLE_TYPES)
-def test_nullable_fields(raw: Union[type, GenericMeta], field_factory: Callable[[str], t.StructField]):
+def test_nullable_fields(raw: type, field_factory: Callable[[str], t.StructField]):
     # noinspection PyTypeChecker
     assert transform_field(DEFAULT_NAME, raw) == field_factory(DEFAULT_NAME)

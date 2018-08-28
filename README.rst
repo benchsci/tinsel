@@ -4,6 +4,7 @@ tinsel
 *Your data IS your schema*
 
 .. image:: https://img.shields.io/pypi/pyversions/tinsel.svg
+    :target: https://pypi.python.org/pypi/tinsel
 .. image:: https://img.shields.io/pypi/v/tinsel.svg
     :target: https://pypi.python.org/pypi/tinsel
 .. image:: https://img.shields.io/travis/Orhideous/tinsel.svg
