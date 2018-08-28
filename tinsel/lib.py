@@ -21,10 +21,15 @@ def is_typed_namedtuple(cls: type) -> bool:
 
 
 def struct(cls: type) -> type:
+    """
+    Marks NamedTuple as suitable for ``tinsel.transform``
+
+    :param cls: Typed NamedTuple
+    """
     if not is_typed_namedtuple(cls):
         raise ValueError(f"Only NamedTuple instances can be decorated with @struct, not {cls.__name__}")
-    cls.__pyspark_struct__ = ...
-    return cls
+    # Overwrite type with augmented one
+    return type(cls.__name__, cls.__bases__, dict(__pyspark_struct__=..., **cls.__dict__))
 
 
 def check_pyspark_struct(cls: type):
@@ -91,7 +96,7 @@ def infer_spark_type(typeclass) -> t.DataType:
         return t.ShortType()
     elif typeclass is byte:
         return t.ByteType()
-    elif "__origin__" in typeclass.__dict__:
+    elif getattr(typeclass, "__origin__", None) is not None:
         return infer_complex_spark_type(typeclass)
     elif is_pyspark_class(typeclass):
         return transform(typeclass)
@@ -107,6 +112,8 @@ def transform_field(name: str, typeclass: Union[type, GenericMeta]) -> t.StructF
 def transform(typeclass: Union[type, GenericMeta]) -> t.StructType:
     """
     Infer PySpark SQL types from namedtuple class fields
+
+    Note: do not forget mark classes with ``@struct`` decorator!
 
     :param typeclass: @struct-annotated NamedTuple class
     :return: PySpark data structure
