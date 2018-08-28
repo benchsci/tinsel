@@ -109,6 +109,11 @@ def test_invalid_dict_keys():
         infer_spark_type(Dict[Optional[int], str])
 
 
+def test_invalid_type():
+    with pytest.raises(TypeError):
+        infer_spark_type(object)
+
+
 def test_invalid_union():
     with pytest.raises(TypeError):
         infer_spark_type(Union[int, str])
