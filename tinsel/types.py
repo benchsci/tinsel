@@ -1,4 +1,5 @@
-from typing import TypeVar, Generic, Dict
+from decimal import Decimal
+from typing import TypeVar, Generic, Dict, Tuple
 
 NoneType = type(None)
 byte = TypeVar("byte")
@@ -11,7 +12,7 @@ __type_cache: Dict[str, type] = {}
 
 
 class BoundDecimal:
-    __slots__ = '__constraints__',
+    __constraints__: Tuple[int, int]
 
 
 class FunctorLike(Generic[T_co]):
@@ -23,7 +24,7 @@ def decimal(prec: int, rounding: int) -> type:
     if name in __type_cache:
         return __type_cache[name]
     else:
-        cls = type(name, (BoundDecimal, ), {})
+        cls = type(name, (BoundDecimal, Decimal), {})
         cls.__constraints__ = (prec, rounding)
         __type_cache[name] = cls
         return cls

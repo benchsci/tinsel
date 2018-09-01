@@ -39,6 +39,8 @@ DATE_TYPES = [
 
 OPTIONALS_PY = [
     (str, (False, str)),
+    (decimal(1, 2), (False, decimal(1, 2))),
+    (Optional[decimal(3, 4)], (True, decimal(3, 4))),
     (List[str], (False, List[str])),
     (Optional[str], (True, str)),
     (Optional[List[str]], (True, List[str])),
