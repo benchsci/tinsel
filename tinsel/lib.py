@@ -4,7 +4,7 @@ from typing import Optional, Union, List, Tuple, Dict
 
 from pyspark.sql import types as t
 
-from tinsel.types import NoneType, byte, short, long, T, T_co, FunctorLike
+from tinsel.types import NoneType, byte, short, long, T, T_co, FunctorLike, BoundDecimal
 
 
 def is_pyspark_class(cls: type) -> bool:
@@ -92,6 +92,9 @@ def infer_spark_type(typeclass) -> t.DataType:
         return t.TimestampType()
     elif typeclass is Decimal:
         return t.DecimalType(precision=36, scale=6)
+    elif isinstance(typeclass, type) and issubclass(typeclass, BoundDecimal):
+        (precision, scale) = typeclass.__constraints__
+        return t.DecimalType(precision=precision, scale=scale)
     elif typeclass is float:
         return t.DoubleType()
     elif typeclass is int:

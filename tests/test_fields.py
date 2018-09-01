@@ -6,7 +6,7 @@ import pytest
 from pyspark.sql import types as t
 
 from tinsel.lib import infer_spark_type, transform_field, maybe_unlift_optional, struct
-from tinsel.types import NoneType, long, short, byte
+from tinsel.types import NoneType, long, short, byte, decimal
 
 DEFAULT_NAME = "some_field"
 
@@ -93,6 +93,9 @@ def test_date_types(py_type, spark_type): check(py_type, spark_type)
 
 
 def test_decimal(): check(Decimal, t.DecimalType(precision=36, scale=6))
+
+
+def test_custom_decimal(): check(decimal(18, 11), t.DecimalType(precision=18, scale=11))
 
 
 def test_list(): check(List[str], t.ArrayType(t.StringType(), False))
