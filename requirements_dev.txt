@@ -4,6 +4,6 @@ tox==3.4.0
 coverage==4.5.1
 coveralls==1.5.1
 pytest==3.8.1
-pytest-cov==2.5.1
+pytest-cov==2.6.0
 pytest-runner==4.2
 twine==1.11.0
