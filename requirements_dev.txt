@@ -1,5 +1,5 @@
 wheel==0.32.2
-flake8==3.5.0
+flake8==3.6.0
 tox==3.4.0
 coverage==4.5.1
 coveralls==1.5.1
