@@ -1,4 +1,4 @@
-wheel==0.32.0
+wheel==0.32.2
 flake8==3.5.0
 tox==3.4.0
 coverage==4.5.1
