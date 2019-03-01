@@ -6,4 +6,4 @@ coveralls==1.6.0
 pytest==4.3.0
 pytest-cov==2.6.1
 pytest-runner==4.4
-twine==1.12.1
+twine==1.13.0
