@@ -1,6 +1,6 @@
 wheel==0.33.6
 flake8==3.7.9
-tox==3.7.0
+tox==3.14.0
 coverage==4.5.2
 coveralls==1.6.0
 pytest==4.3.0
