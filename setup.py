@@ -9,9 +9,9 @@ if not sys.version_info >= (3, 6):
 readme = Path('README.rst').read_text()
 history = Path('HISTORY.rst').read_text()
 
-requirements = ['pyspark>=2.3', ]
+requirements = []
 setup_requirements = ['pytest-runner', ]
-test_requirements = ['pytest', ]
+test_requirements = ['pytest', 'pyspark>=2.3']
 
 setup(
     author="Andriy Kushnir (Orhideous)",
