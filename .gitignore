@@ -103,3 +103,6 @@ ENV/
 
 .idea
 *.iml
+
+# coveralls
+.coveralls.yml
