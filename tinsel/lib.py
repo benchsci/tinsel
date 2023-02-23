@@ -25,12 +25,18 @@ def struct(cls: type) -> type:
     """
     Marks NamedTuple as suitable for ``tinsel.transform``
 
-    :param cls: Typed NamedTuple
+    :param cls: Typed NamedTuple, or Dataclass
     """
     if not is_container(cls):
-        raise ValueError(f"Only NamedTuple instances can be decorated with @struct, not {cls.__name__}")
+        raise ValueError(f"Only NamedTuple and Dataclass instances can be decorated with @struct, not {cls.__name__}")
+
+    newdict = dict(__pyspark_struct__=..., **cls.__dict__)
+    # These are class-bound, let Python recreate them so dataclasses still work
+    newdict.pop('__dict__', None)
+    newdict.pop('__weakref__', None)
+
     # Overwrite type with augmented one
-    return type(cls.__name__, cls.__bases__, dict(__pyspark_struct__=..., **cls.__dict__))
+    return type(cls.__name__, cls.__bases__, newdict)
 
 
 def check_pyspark_struct(cls: type):

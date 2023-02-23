@@ -2,8 +2,10 @@ wheel==0.33.1
 flake8==3.7.7
 tox==3.7.0
 coverage==4.5.2
+pyyaml==6.0.0
 coveralls==1.6.0
 pytest==4.3.0
 pytest-cov==2.6.1
 pytest-runner==4.4
 twine==1.13.0
+pyspark>=2.3

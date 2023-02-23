@@ -139,3 +139,17 @@ def test_parse_complex_type_dc():
 
     assert transform(ComplexDC) == COMPLEX_STRUCT
     assert transform(Complex) == transform(ComplexDC)
+
+
+@skip_dc
+def test_retains_dict_dc():
+    from dataclasses import dataclass
+
+    @struct
+    @dataclass
+    class PlainDC:
+        a: str
+        b: int
+        c: bool
+
+    assert hasattr(PlainDC("a", 1, True), "__dict__")
